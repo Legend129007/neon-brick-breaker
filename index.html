@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Brick Breaker</title>
+    <meta name="description" content="A cyberpunk-themed brick breaker game with neon visuals and smooth physics">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- HUD -->
+        <div id="hud" class="hidden">
+            <div class="hud-item">
+                <span class="hud-label">SCORE</span>
+                <span id="score" class="hud-value">0</span>
+            </div>
+            <div class="hud-item">
+                <span id="difficulty-display" class="hud-label">EASY</span>
+                <span id="level" class="hud-value">1</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label">LIVES</span>
+                <span id="lives" class="hud-value">3</span>
+            </div>
+        </div>
+
+        <!-- Pause Button -->
+        <button id="pause-btn" class="pause-btn hidden">❚❚</button>
+
+        <!-- Pause Overlay with Menu Options -->
+        <div id="pause-overlay" class="overlay hidden">
+            <div class="overlay-content">
+                <h1 class="game-title pause-title">PAUSED</h1>
+                <div class="menu-buttons">
+                    <button id="resume-btn" class="neon-btn">▶ RESUME</button>
+                    <button id="pause-highscore-btn" class="neon-btn secondary">🏆 HIGH SCORES</button>
+                    <button id="end-game-btn" class="neon-btn danger">🏠 END GAME</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Overlay -->
+        <div id="start-overlay" class="overlay">
+            <div class="overlay-content">
+                <h1 class="game-title">NEON<br>BREAKER</h1>
+                <p class="subtitle">Destroy all bricks to win</p>
+
+                <!-- Difficulty Selection -->
+                <div class="difficulty-section">
+                    <h2 class="section-title">SELECT DIFFICULTY</h2>
+                    <div class="difficulty-buttons">
+                        <button class="difficulty-btn active" data-difficulty="easy">
+                            <span class="diff-name">EASY</span>
+                            <span class="diff-desc">Relaxed pace</span>
+                        </button>
+                        <button class="difficulty-btn" data-difficulty="medium">
+                            <span class="diff-name">MEDIUM</span>
+                            <span class="diff-desc">Balanced challenge</span>
+                        </button>
+                        <button class="difficulty-btn" data-difficulty="hard">
+                            <span class="diff-name">HARD</span>
+                            <span class="diff-desc">Intense action</span>
+                        </button>
+                    </div>
+                </div>
+
+                <button id="start-btn" class="neon-btn">START GAME</button>
+                <button id="view-highscores-btn" class="neon-btn secondary">🏆 VIEW HIGH SCORES</button>
+
+                <div class="controls-info">
+                    <p>🖱️ Move mouse to control paddle</p>
+                    <p>📱 Touch to control on mobile</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Highscores Overlay -->
+        <div id="highscores-overlay" class="overlay hidden">
+            <div class="overlay-content wide-content">
+                <h1 class="game-title highscore-page-title">🏆 HIGH SCORES</h1>
+
+                <div class="highscore-tabs">
+                    <button class="tab-btn active" data-tab="easy">EASY</button>
+                    <button class="tab-btn" data-tab="medium">MEDIUM</button>
+                    <button class="tab-btn" data-tab="hard">HARD</button>
+                </div>
+
+                <div class="highscore-content">
+                    <div id="highscore-tab-easy" class="highscore-tab-content active">
+                        <div id="easy-highscore-list" class="highscore-list full-list">
+                            <p class="no-scores">No scores yet!</p>
+                        </div>
+                    </div>
+                    <div id="highscore-tab-medium" class="highscore-tab-content">
+                        <div id="medium-highscore-list" class="highscore-list full-list">
+                            <p class="no-scores">No scores yet!</p>
+                        </div>
+                    </div>
+                    <div id="highscore-tab-hard" class="highscore-tab-content">
+                        <div id="hard-highscore-list" class="highscore-list full-list">
+                            <p class="no-scores">No scores yet!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="back-from-highscores-btn" class="neon-btn">← BACK</button>
+            </div>
+        </div>
+
+        <!-- Game Over Overlay -->
+        <div id="gameover-overlay" class="overlay hidden">
+            <div class="overlay-content">
+                <h1 id="gameover-title" class="game-title">GAME OVER</h1>
+                <p id="final-score" class="subtitle">Final Score: 0</p>
+                <p id="new-highscore" class="new-highscore hidden">🌟 NEW HIGH SCORE! 🌟</p>
+                <div class="menu-buttons">
+                    <button id="restart-btn" class="neon-btn">🔄 PLAY AGAIN</button>
+                    <button id="home-btn" class="neon-btn secondary">🏠 HOME</button>
+                </div>
+
+                <!-- Highscore Section -->
+                <div id="gameover-highscores" class="highscore-section">
+                    <h2 class="highscore-title">🏆 HIGH SCORES</h2>
+                    <div id="gameover-highscore-list" class="highscore-list">
+                        <p class="no-scores">No scores yet!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Level Complete Overlay -->
+        <div id="level-overlay" class="overlay hidden">
+            <div class="overlay-content">
+                <h1 class="game-title level-complete">LEVEL<br>COMPLETE</h1>
+                <p id="level-score" class="subtitle">Score: 0</p>
+                <button id="next-level-btn" class="neon-btn">NEXT LEVEL</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+
+</html>
